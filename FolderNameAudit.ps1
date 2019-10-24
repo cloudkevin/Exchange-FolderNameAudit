@@ -2,15 +2,12 @@ add-pssnapin *exchange* -erroraction SilentlyContinue
 
 $i = 0    
 
-$Mailboxes = Get-Mailbox
+$Mailboxes = Get-Mailbox -ResultSize Unlimited
 
-foreach($Mailbox in $Mailboxes)
+$Results = foreach($Mailbox in $Mailboxes)
 {
-   $Results = foreach( $Mailbox in $Mailboxes ){
         
-   Get-MailboxFolderStatistics -Identity $Mailbox.DistinguishedName | Where {$_.Name -like '*/*'}
-        
-    }
+   Get-MailboxFolderStatistics -Identity $Mailbox.DistinguishedName | Where {$_.Name -like '*/*'}   
     
    $i++
    Write-Progress -activity "Checking mailboxes" -status "Checked so far: $i of $($Mailboxes.Count)" -percentComplete (($i / $Mailboxes.Count)  * 100)
