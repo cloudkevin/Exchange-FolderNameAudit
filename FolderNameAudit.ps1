@@ -7,7 +7,7 @@ $Mailboxes = Get-Mailbox -ResultSize Unlimited
 $Results = foreach($Mailbox in $Mailboxes)
 {
         
-   Get-MailboxFolderStatistics -Identity $Mailbox.DistinguishedName | Where {$_.Name -like '*/*' -or $_.Name -like '*-*'}   
+   Get-MailboxFolderStatistics -Identity $Mailbox.DistinguishedName | Where {$_.Name -like '*/*' -or $_.Name -like '*-*' -or $_.Name -like '*\*'}   
     
    $i++
    Write-Progress -activity "Checking mailboxes" -status "Checked so far: $i of $($Mailboxes.Count)" -percentComplete (($i / $Mailboxes.Count)  * 100)
